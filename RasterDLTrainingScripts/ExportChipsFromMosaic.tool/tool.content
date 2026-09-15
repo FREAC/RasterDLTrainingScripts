@@ -1,0 +1,729 @@
+{
+    "type": "ScriptTool",
+    "displayname": "$rc:title",
+    "app_ver": "13.7",
+    "product": "100",
+    "updated": "2026-09-11 19:47:24",
+    "description": "$rc:description",
+    "params": {
+        "project_folder": {
+            "direction": "out",
+            "displayname": "$rc:project_folder.title",
+            "datatype": {
+                "type": "DEFolder"
+            },
+            "description": "$rc:project_folder.descr"
+        },
+        "folder_or_bags": {
+            "displayname": "$rc:folder_or_bags.title",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "Folder",
+                        "code": "$rc:folder_or_bags.domain.Folder"
+                    },
+                    {
+                        "value": "Individual Rasters",
+                        "code": "$rc:folder_or_bags.domain.Individual Rasters"
+                    }
+                ]
+            },
+            "value": "Folder"
+        },
+        "bag_folder": {
+            "type": "optional",
+            "displayname": "$rc:bag_folder.title",
+            "datatype": {
+                "type": "DEFolder"
+            },
+            "description": "$rc:bag_folder.descr"
+        },
+        "Rasters": {
+            "type": "optional",
+            "displayname": "$rc:rasters.title",
+            "datatype": {
+                "type": "GPMultiValue",
+                "datatype": {
+                    "type": "GPRasterLayer"
+                }
+            }
+        },
+        "shipwrecks_shp": {
+            "displayname": "$rc:shipwrecks_shp.title",
+            "datatype": {
+                "type": "GPFeatureRecordSetLayer"
+            },
+            "domain": {
+                "type": "GPFeatureClassDomain",
+                "geometrytype": [
+                    "Polygon"
+                ]
+            },
+            "description": "$rc:shipwrecks_shp.descr"
+        },
+        "metadata_form": {
+            "displayname": "$rc:metadata_form.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "KITTI_rectangles",
+                        "code": "$rc:metadata_form.domain.KITTI_rectangles"
+                    },
+                    {
+                        "value": "PASCAL_VOC_rectangles",
+                        "code": "$rc:metadata_form.domain.PASCAL_VOC_rectangles"
+                    },
+                    {
+                        "value": "Classified_Tiles",
+                        "code": "$rc:metadata_form.domain.Classified_Tiles"
+                    },
+                    {
+                        "value": "RCNN_Masks",
+                        "code": "$rc:metadata_form.domain.RCNN_Masks"
+                    },
+                    {
+                        "value": "Labeled_Tiles",
+                        "code": "$rc:metadata_form.domain.Labeled_Tiles"
+                    },
+                    {
+                        "value": "MultiLabeled_Tiles",
+                        "code": "$rc:metadata_form.domain.MultiLabeled_Tiles"
+                    },
+                    {
+                        "value": "Export_Tiles",
+                        "code": "$rc:metadata_form.domain.Export_Tiles"
+                    },
+                    {
+                        "value": "CycleGAN",
+                        "code": "$rc:metadata_form.domain.CycleGAN"
+                    },
+                    {
+                        "value": "Imagenet",
+                        "code": "$rc:metadata_form.domain.Imagenet"
+                    },
+                    {
+                        "value": "Panoptic_Segmentation",
+                        "code": "$rc:metadata_form.domain.Panoptic_Segmentation"
+                    }
+                ]
+            },
+            "value": "RCNN_Masks",
+            "description": "$rc:metadata_form.descr"
+        },
+        "tile_size_x": {
+            "displayname": "$rc:tile_size_x.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPLong"
+            },
+            "value": "32",
+            "description": "$rc:tile_size_x.descr"
+        },
+        "tile_size_y": {
+            "displayname": "$rc:tile_size_y.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPLong"
+            },
+            "value": "32",
+            "description": "$rc:tile_size_y.descr"
+        },
+        "stride_x": {
+            "displayname": "$rc:stride_x.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPLong"
+            },
+            "value": "16",
+            "description": "$rc:stride_x.descr"
+        },
+        "stride_y": {
+            "displayname": "$rc:stride_y.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPLong"
+            },
+            "value": "16",
+            "description": "$rc:stride_y.descr"
+        },
+        "class_value_field": {
+            "type": "optional",
+            "displayname": "$rc:class_value_field.title",
+            "category": "$rc:params.category.2",
+            "datatype": {
+                "type": "Field"
+            },
+            "depends": [
+                "shipwrecks_shp"
+            ],
+            "description": "$rc:class_value_field.descr"
+        },
+        "buffer_radius": {
+            "type": "optional",
+            "displayname": "$rc:buffer_radius.title",
+            "category": "$rc:params.category.2",
+            "datatype": {
+                "type": "GPDouble"
+            },
+            "description": "$rc:buffer_radius.descr"
+        },
+        "rotation_angle": {
+            "type": "optional",
+            "displayname": "$rc:rotation_angle.title",
+            "category": "$rc:params.category.2",
+            "datatype": {
+                "type": "GPDouble"
+            },
+            "value": "0",
+            "description": "$rc:rotation_angle.descr"
+        },
+        "reference_system": {
+            "type": "optional",
+            "displayname": "$rc:reference_system.title",
+            "category": "$rc:params.category.2",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "MAP_SPACE",
+                        "code": "$rc:reference_system.domain.MAP_SPACE"
+                    },
+                    {
+                        "value": "PIXEL_SPACE",
+                        "code": "$rc:reference_system.domain.PIXEL_SPACE"
+                    }
+                ]
+            },
+            "value": "MAP_SPACE",
+            "description": "$rc:reference_system.descr"
+        },
+        "blacken_around_feature": {
+            "type": "optional",
+            "displayname": "$rc:blacken_around_feature.title",
+            "category": "$rc:params.category.2",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "BLACKEN_AROUND_FEATURE",
+                        "code": "$rc:blacken_around_feature.domain.BLACKEN_AROUND_FEATURE"
+                    },
+                    {
+                        "value": "NO_BLACKEN",
+                        "code": "$rc:blacken_around_feature.domain.NO_BLACKEN"
+                    }
+                ]
+            },
+            "value": "NO_BLACKEN",
+            "description": "$rc:blacken_around_feature.descr"
+        },
+        "crop_mode": {
+            "type": "optional",
+            "displayname": "$rc:crop_mode.title",
+            "category": "$rc:params.category.2",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "FIXED_SIZE",
+                        "code": "$rc:crop_mode.domain.FIXED_SIZE"
+                    },
+                    {
+                        "value": "BOUNDING_BOX",
+                        "code": "$rc:crop_mode.domain.BOUNDING_BOX"
+                    }
+                ]
+            },
+            "value": "FIXED_SIZE",
+            "description": "$rc:crop_mode.descr"
+        },
+        "band1": {
+            "displayname": "$rc:band1.title",
+            "category": "$rc:params.category.3",
+            "datatype": {
+                "type": "GPLong"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "type": "GPLong",
+                        "value": "1",
+                        "code": "1"
+                    },
+                    {
+                        "type": "GPLong",
+                        "value": "2",
+                        "code": "2"
+                    }
+                ]
+            },
+            "value": "1",
+            "description": "$rc:band1.descr"
+        },
+        "band1_calc": {
+            "type": "optional",
+            "displayname": "$rc:band1_calc.title",
+            "category": "$rc:params.category.3",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "No Calculation",
+                        "code": "$rc:band1_calc.domain.No Calculation"
+                    },
+                    {
+                        "value": "Sobel Vertical",
+                        "code": "$rc:band1_calc.domain.Sobel Vertical"
+                    },
+                    {
+                        "value": "Shaded Relief",
+                        "code": "$rc:band1_calc.domain.Shaded Relief"
+                    },
+                    {
+                        "value": "Custom Convolution",
+                        "code": "$rc:band1_calc.domain.Custom Convolution"
+                    }
+                ]
+            },
+            "value": "No Calculation",
+            "description": "$rc:band1_calc.descr"
+        },
+        "band1_conv": {
+            "type": "optional",
+            "displayname": "$rc:band1_conv.title",
+            "category": "$rc:params.category.3",
+            "datatype": {
+                "type": "GPString"
+            },
+            "value": "[[-1, 0, 1],\n [-2, 0, 2],\n [-1, 0, 1]]",
+            "description": "$rc:band1_conv.descr"
+        },
+        "band2": {
+            "displayname": "$rc:band2.title",
+            "category": "$rc:params.category.3",
+            "datatype": {
+                "type": "GPLong"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "type": "GPLong",
+                        "value": "1",
+                        "code": "1"
+                    },
+                    {
+                        "type": "GPLong",
+                        "value": "2",
+                        "code": "2"
+                    }
+                ]
+            },
+            "value": "2",
+            "description": "$rc:band2.descr"
+        },
+        "band2_calc": {
+            "type": "optional",
+            "displayname": "$rc:band2_calc.title",
+            "category": "$rc:params.category.3",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "No Calculation",
+                        "code": "$rc:band2_calc.domain.No Calculation"
+                    },
+                    {
+                        "value": "Sobel Vertical",
+                        "code": "$rc:band2_calc.domain.Sobel Vertical"
+                    },
+                    {
+                        "value": "Custom Convolution",
+                        "code": "$rc:band2_calc.domain.Custom Convolution"
+                    }
+                ]
+            },
+            "value": "No Calculation",
+            "description": "$rc:band2_calc.descr"
+        },
+        "band2_conv": {
+            "type": "optional",
+            "displayname": "$rc:band2_conv.title",
+            "category": "$rc:params.category.3",
+            "datatype": {
+                "type": "GPString"
+            },
+            "value": "[[-1, 0, 1],\n [-2, 0, 2],\n [-1, 0, 1]]",
+            "description": "$rc:band2_conv.descr"
+        },
+        "band3": {
+            "displayname": "$rc:band3.title",
+            "category": "$rc:params.category.3",
+            "datatype": {
+                "type": "GPLong"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "type": "GPLong",
+                        "value": "1",
+                        "code": "1"
+                    },
+                    {
+                        "type": "GPLong",
+                        "value": "2",
+                        "code": "2"
+                    }
+                ]
+            },
+            "value": "1",
+            "description": "$rc:band3.descr"
+        },
+        "band3_calc": {
+            "type": "optional",
+            "displayname": "$rc:band3_calc.title",
+            "category": "$rc:params.category.3",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "No Calculation",
+                        "code": "$rc:band3_calc.domain.No Calculation"
+                    },
+                    {
+                        "value": "Sobel Vertical",
+                        "code": "$rc:band3_calc.domain.Sobel Vertical"
+                    },
+                    {
+                        "value": "Custom Convolution",
+                        "code": "$rc:band3_calc.domain.Custom Convolution"
+                    }
+                ]
+            },
+            "value": "Sobel Vertical",
+            "description": "$rc:band3_calc.descr"
+        },
+        "band3_conv": {
+            "type": "optional",
+            "displayname": "$rc:band3_conv.title",
+            "category": "$rc:params.category.3",
+            "datatype": {
+                "type": "GPString"
+            },
+            "value": "[[-1, 0, 1],\n [-2, 0, 2],\n [-1, 0, 1]]",
+            "description": "$rc:band3_conv.descr"
+        },
+        "azimuth": {
+            "type": "optional",
+            "displayname": "$rc:azimuth.title",
+            "category": "$rc:params.category.4",
+            "datatype": {
+                "type": "GPDouble"
+            },
+            "depends": [
+                "band1_calc"
+            ],
+            "value": "315",
+            "description": "$rc:azimuth.descr"
+        },
+        "altitude": {
+            "type": "optional",
+            "displayname": "$rc:altitude.title",
+            "category": "$rc:params.category.4",
+            "datatype": {
+                "type": "GPDouble"
+            },
+            "depends": [
+                "band1_calc"
+            ],
+            "value": "45",
+            "description": "$rc:altitude.descr"
+        },
+        "z_factor": {
+            "type": "optional",
+            "displayname": "$rc:z_factor.title",
+            "category": "$rc:params.category.4",
+            "datatype": {
+                "type": "GPDouble"
+            },
+            "depends": [
+                "band1_calc"
+            ],
+            "value": "1",
+            "description": "$rc:z_factor.descr"
+        },
+        "colormap": {
+            "type": "optional",
+            "displayname": "$rc:colormap.title",
+            "category": "$rc:params.category.4",
+            "datatype": {
+                "type": "GPString"
+            },
+            "depends": [
+                "band1_calc"
+            ],
+            "description": "$rc:colormap.descr"
+        },
+        "colorramp": {
+            "type": "optional",
+            "displayname": "$rc:colorramp.title",
+            "category": "$rc:params.category.4",
+            "datatype": {
+                "type": "GPString"
+            },
+            "depends": [
+                "band1_calc"
+            ],
+            "value": "Elevation #1",
+            "description": "$rc:colorramp.descr"
+        },
+        "slope_type": {
+            "type": "optional",
+            "displayname": "$rc:slope_type.title",
+            "category": "$rc:params.category.4",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "DEGREE",
+                        "code": "$rc:slope_type.domain.DEGREE"
+                    },
+                    {
+                        "value": "PERCENTRISE",
+                        "code": "$rc:slope_type.domain.PERCENTRISE"
+                    },
+                    {
+                        "value": "SCALED",
+                        "code": "$rc:slope_type.domain.SCALED"
+                    }
+                ]
+            },
+            "depends": [
+                "band1_calc"
+            ],
+            "value": "DEGREE",
+            "description": "$rc:slope_type.descr"
+        },
+        "ps_power": {
+            "type": "optional",
+            "displayname": "$rc:ps_power.title",
+            "category": "$rc:params.category.4",
+            "datatype": {
+                "type": "GPDouble"
+            },
+            "depends": [
+                "band1_calc"
+            ],
+            "value": "0.664",
+            "description": "$rc:ps_power.descr"
+        },
+        "psz_factor": {
+            "type": "optional",
+            "displayname": "$rc:psz_factor.title",
+            "category": "$rc:params.category.4",
+            "datatype": {
+                "type": "GPDouble"
+            },
+            "depends": [
+                "band1_calc"
+            ],
+            "value": "0.024",
+            "description": "$rc:psz_factor.descr"
+        },
+        "remove_edge_effect": {
+            "type": "optional",
+            "displayname": "$rc:remove_edge_effect.title",
+            "category": "$rc:params.category.4",
+            "datatype": {
+                "type": "GPBoolean"
+            },
+            "depends": [
+                "band1_calc"
+            ],
+            "value": "false",
+            "description": "$rc:remove_edge_effect.descr"
+        },
+        "image_chip_format": {
+            "type": "optional",
+            "displayname": "$rc:image_chip_format.title",
+            "category": "$rc:params.category.2",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "TIFF",
+                        "code": "$rc:image_chip_format.domain.TIFF"
+                    },
+                    {
+                        "value": "PNG",
+                        "code": "$rc:image_chip_format.domain.PNG"
+                    },
+                    {
+                        "value": "JPEG",
+                        "code": "$rc:image_chip_format.domain.JPEG"
+                    },
+                    {
+                        "value": "MRF",
+                        "code": "$rc:image_chip_format.domain.MRF"
+                    }
+                ]
+            },
+            "value": "TIFF",
+            "description": "$rc:image_chip_format.descr"
+        },
+        "output_nofeature_tiles": {
+            "type": "optional",
+            "displayname": "$rc:output_nofeature_tiles.title",
+            "category": "$rc:params.category.2",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "ALL_TILES",
+                        "code": "$rc:output_nofeature_tiles.domain.ALL_TILES"
+                    },
+                    {
+                        "value": "ONLY_TILES_WITH_FEATURES",
+                        "code": "$rc:output_nofeature_tiles.domain.ONLY_TILES_WITH_FEATURES"
+                    }
+                ]
+            },
+            "value": "ONLY_TILES_WITH_FEATURES",
+            "description": "$rc:output_nofeature_tiles.descr"
+        },
+        "in_mask_polygons": {
+            "type": "optional",
+            "displayname": "$rc:in_mask_polygons.title",
+            "category": "$rc:params.category.2",
+            "datatype": {
+                "type": "GPFeatureRecordSetLayer"
+            },
+            "domain": {
+                "type": "GPFeatureClassDomain",
+                "geometrytype": [
+                    "Polygon"
+                ]
+            },
+            "description": "$rc:in_mask_polygons.descr"
+        },
+        "processing_mode": {
+            "type": "optional",
+            "displayname": "$rc:processing_mode.title",
+            "category": "$rc:params.category.2",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "PROCESS_AS_MOSAICKED_IMAGE",
+                        "code": "$rc:processing_mode.domain.PROCESS_AS_MOSAICKED_IMAGE"
+                    },
+                    {
+                        "value": "PROCESS_ITEMS_SEPARATELY",
+                        "code": "$rc:processing_mode.domain.PROCESS_ITEMS_SEPARATELY"
+                    }
+                ]
+            },
+            "value": "PROCESS_AS_MOSAICKED_IMAGE",
+            "description": "$rc:processing_mode.descr"
+        },
+        "in_raster2": {
+            "type": "optional",
+            "displayname": "$rc:in_raster2.title",
+            "category": "$rc:params.category.2",
+            "datatype": {
+                "type": "GPRasterLayer"
+            },
+            "description": "$rc:in_raster2.descr"
+        },
+        "in_instance_data": {
+            "type": "optional",
+            "displayname": "$rc:in_instance_data.title",
+            "category": "$rc:params.category.2",
+            "datatype": {
+                "type": "GPFeatureRecordSetLayer"
+            },
+            "description": "$rc:in_instance_data.descr"
+        },
+        "instance_class_value_field": {
+            "type": "optional",
+            "displayname": "$rc:instance_class_value_field.title",
+            "category": "$rc:params.category.2",
+            "datatype": {
+                "type": "GPString"
+            },
+            "description": "$rc:instance_class_value_field.descr"
+        },
+        "min_polygon_overlap_ratio": {
+            "type": "optional",
+            "displayname": "$rc:min_polygon_overlap_ratio.title",
+            "category": "$rc:params.category.2",
+            "datatype": {
+                "type": "GPString"
+            },
+            "value": "0",
+            "description": "$rc:min_polygon_overlap_ratio.descr"
+        },
+        "add_chip_name": {
+            "type": "optional",
+            "displayname": "$rc:add_chip_name.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPBoolean"
+            },
+            "value": "false",
+            "description": "$rc:add_chip_name.descr"
+        },
+        "chip_names": {
+            "type": "optional",
+            "displayname": "$rc:chip_names.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPString"
+            },
+            "depends": [
+                "add_chip_name"
+            ]
+        }
+    }
+}

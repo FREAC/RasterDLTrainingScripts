@@ -1,0 +1,155 @@
+{
+    "type": "ScriptTool",
+    "displayname": "$rc:title",
+    "app_ver": "13.7",
+    "product": "100",
+    "updated": "2026-09-11 20:29:07",
+    "description": "$rc:description",
+    "params": {
+        "folder_or_individual_chips": {
+            "displayname": "$rc:folder_or_individual_chips.title",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "Folder",
+                        "code": "$rc:folder_or_individual_chips.domain.Folder"
+                    },
+                    {
+                        "value": "Individual Chips",
+                        "code": "$rc:folder_or_individual_chips.domain.Individual Chips"
+                    }
+                ]
+            },
+            "value": "Folder"
+        },
+        "chips_folder": {
+            "type": "optional",
+            "displayname": "$rc:chips_folder.title",
+            "datatype": {
+                "type": "DEFolder"
+            },
+            "description": "$rc:chips_folder.descr"
+        },
+        "indiv_chips": {
+            "type": "optional",
+            "displayname": "$rc:indiv_chips.title",
+            "datatype": {
+                "type": "GPMultiValue",
+                "datatype": {
+                    "type": "GPRasterLayer"
+                }
+            }
+        },
+        "out_csv": {
+            "direction": "out",
+            "displayname": "$rc:out_csv.title",
+            "datatype": {
+                "type": "DEFile"
+            },
+            "domain": {
+                "type": "GPFileDomain",
+                "filetypes": [
+                    "csv"
+                ]
+            },
+            "description": "$rc:out_csv.descr"
+        },
+        "bad_files_csv": {
+            "direction": "out",
+            "displayname": "$rc:bad_files_csv.title",
+            "datatype": {
+                "type": "DEFile"
+            },
+            "domain": {
+                "type": "GPFileDomain",
+                "filetypes": [
+                    "csv"
+                ]
+            },
+            "description": "$rc:bad_files_csv.descr"
+        },
+        "NODATA_THRESHOLD": {
+            "displayname": "$rc:nodata_threshold.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPLong"
+            },
+            "value": "10000000000",
+            "description": "$rc:nodata_threshold.descr"
+        },
+        "SUSPECT_THRESHOLD": {
+            "displayname": "$rc:suspect_threshold.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPLong"
+            },
+            "value": "999999",
+            "description": "$rc:suspect_threshold.descr"
+        },
+        "FILL_VALUE": {
+            "displayname": "$rc:fill_value.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPLong"
+            },
+            "value": "1000000",
+            "description": "$rc:fill_value.descr"
+        },
+        "REMOVE_VALID_PERCENT": {
+            "displayname": "$rc:remove_valid_percent.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPDouble"
+            },
+            "value": "90",
+            "description": "$rc:remove_valid_percent.descr"
+        },
+        "MARGINAL_VALID_PERCENT": {
+            "displayname": "$rc:marginal_valid_percent.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPDouble"
+            },
+            "value": "50",
+            "description": "$rc:marginal_valid_percent.descr"
+        },
+        "GOOD_VALID_PERCENT": {
+            "displayname": "$rc:good_valid_percent.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPDouble"
+            },
+            "value": "80",
+            "description": "$rc:good_valid_percent.descr"
+        },
+        "EXCELLENT_VALID_PERCENT": {
+            "displayname": "$rc:excellent_valid_percent.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPDouble"
+            },
+            "value": "95",
+            "description": "$rc:excellent_valid_percent.descr"
+        },
+        "group_inspection": {
+            "displayname": "$rc:group_inspection.title",
+            "datatype": {
+                "type": "GPBoolean"
+            },
+            "value": "false",
+            "description": "$rc:group_inspection.descr"
+        },
+        "group_map": {
+            "type": "optional",
+            "displayname": "$rc:group_map.title",
+            "datatype": {
+                "type": "GPMap"
+            },
+            "description": "$rc:group_map.descr"
+        }
+    }
+}

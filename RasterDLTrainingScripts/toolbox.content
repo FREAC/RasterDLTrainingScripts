@@ -1,0 +1,13 @@
+{
+    "version": "1.0",
+    "alias": "RasterDLTrainingScripts",
+    "displayname": "$rc:title",
+    "toolsets": {
+        "<root>": {
+            "tools": [
+                "ExportChipsFromMosaic",
+                "InspectChips"
+            ]
+        }
+    }
+}
