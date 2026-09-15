@@ -9,7 +9,6 @@ import csv
 import rasterio
 import numpy as np
 import arcpy
-
 def script_tool(
     dir_or_files,
     IMAGE_DIR, 
@@ -49,7 +48,7 @@ def script_tool(
     
     image_files = sorted(Path(IMAGE_DIR).glob("*.tif"))
     #2,500
-    arcpy.AddMessage(group_map)
+    #arcpy.AddMessage(group_map)
     arcpy.AddMessage(f"TIFFs Found: {len(image_files)}")
     
     rows = []
@@ -150,19 +149,19 @@ def script_tool(
         for file_name in bad_files:
             writer.writerow([file_name])
     
-    def add_tifs_to_group(group_tifs, group_name):
-        group_layer = group_map.createGroupLayer(group_name)
+    def add_tifs_to_group(group_tifs, group_name, map_layer):
+        group_layer = map_layer.createGroupLayer(group_name)
         iter = 0
         for tif in group_tifs:
             tif_path = Path(IMAGE_DIR) / tif
-            raster_layer = group_map.addDataFromPath(str(tif_path))
-            group_map.addLayerToGroup(group_layer,raster_layer,"BOTTOM")
-            group_map.removeLayer(raster_layer)
+            raster_layer = map_layer.addDataFromPath(str(tif_path))
+            map_layer.addLayerToGroup(group_layer,raster_layer,"BOTTOM")
+            map_layer.removeLayer(raster_layer)
             if iter % 10 == 0:
                 arcpy.AddMessage(f"==========Processed {iter} / {len(image_files):,}==========")
             iter+=1
     if group_chips:
-        add_tifs_to_group(bad_files, "Remove Chips")
+        add_tifs_to_group(bad_files, "Remove Chips", group_map)
         #add_tifs_to_group(marg_files, "Marginal Chips")
         #add_tifs_to_group(edge_files, "Edge Tile Chips")
         #add_tifs_to_group(good_files, "Good Chips")
@@ -212,14 +211,19 @@ if __name__ == "__main__":
     MARGINAL_VALID_PERCENT = arcpy.GetParameterAsText(9)
     GOOD_VALID_PERCENT = arcpy.GetParameterAsText(10)
     EXCELLENT_VALID_PERCENT = arcpy.GetParameterAsText(11)
-    group_chips = bool(arcpy.GetParameterAsText(12))
-    group_map = arcpy.GetParameterAsText(13)
-    if group_chips and group_map == None:
+    group_chips = arcpy.GetParameterAsText(12)
+    group_map_name = arcpy.GetParameterAsText(13)
+    group_map = None
+    if group_chips:
         aprx = arcpy.mp.ArcGISProject("CURRENT")
-        group_map = aprx.listMaps()[0]
-    if group_map != None:
-        aprx = arcpy.mp.ArcGISProject("CURRENT")
-        group_map = next(m for m in aprx.listMaps() if m.name == group_map)
+        if group_map_name:
+            group_map = next((m for m in aprx.listMaps() if m.name == group_map_name),None)
+        else:
+            group_map = aprx.listMaps()[0]
+        if group_map is None:
+            raise RuntimeError(f"Could not find map '{group_map_name}'.")
+    else:
+        group_map = None
     
     script_tool(folder_or_indiv, in_folder, out_csv, bad_files_csv, 
         NODATA_THRESHOLD, SUSPECT_THRESHOLD, FILL_VALUE, REMOVE_VALID_PERCENT, 
