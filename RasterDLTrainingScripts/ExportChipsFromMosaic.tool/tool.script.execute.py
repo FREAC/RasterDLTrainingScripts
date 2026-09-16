@@ -277,13 +277,13 @@ def script_tool(
         out_chips = os.path.join(project_folder,r"Chips\Train\images")
         out_labels = os.path.join(project_folder,r"Chips\Train\labels\1")
         chip_list = [os.path.join(out_chips, file) for file in os.listdir(out_chips)]
-        label_list = [os.path.join(out_labels, file) for file in os.listdir(out_labels)]
+        #label_list = [os.path.join(out_labels, file) for file in os.listdir(out_labels)]
         for chip in chip_list:
             new_chip_name = os.path.join(out_chips,chip_names+os.path.basename(chip))
             os.rename(chip,new_chip_name)
-        for label in label_list:
-            new_label_name = os.path.join(out_labels,chip_names+os.path.basename(label))
-            os.rename(label,new_label_name)
+        #for label in label_list:
+        #    new_label_name = os.path.join(out_labels,chip_names+os.path.basename(label))
+        #    os.rename(label,new_label_name)
     return
 if __name__ == "__main__":
     # Main inputs
