@@ -6,6 +6,28 @@ The Raster Deep Learning Training Scripts provide a workflow for preparing and e
 
 Recent addition description TBA
 
+## Default Settings
+
+<img width="473" height="258" alt="image" src="https://github.com/user-attachments/assets/60d9efc3-a956-4714-be65-659a1179f59e" />
+
+Parameters:
+
+- Folder or Individual Bags: Whether the input rasters is from a folder or individual raster layers from the ArcGIS project
+- Input Folder/Rasters: Specific folder or set of raster layers
+- Output CSV: Output summary of all problem bag files and their respective discrepancies either between the most common value or the target value for a given raster parameter
+
+## Target Parameter Settings
+
+<img width="471" height="275" alt="image" src="https://github.com/user-attachments/assets/c40076e1-6666-463d-b259-6c9dd59fe71c" />
+
+- Assign to Target Parameters: Will assign all inputted target parameters to bags that do not match said target parameters. Target parameters left blank will be unchanged, but any discrepancies between bag files will still be logged in Output CSV and in the ArcGIS Pro messages.
+- Target Cell Y: Cell Size Y that the user wants all bags to have. Bags that do not match will be assigned to this value if Assign to Target Parameters is checked.
+- Target Cell X: Cell Size X that the user wants all bags to have. Bags that do not match will be assigned to this value if Assign to Target Parameters is checked.
+- Target Bag Format: Raster file format that the user wants all rasters to have. Bag files by default (may need to change coding guardrails on this)
+- Target Pixel Depth/Type: Pixel Depth and Pixel Type that the user wants all bags to have. Bags that do not match will be assigned to this value if Assign to Target Parameters is checked and if the bag driver allows.
+- Target Band Number: Band count that the user wants all bags to have. Assign Target Parameters will not change this value for now as to not lose data/allow user specificity/
+- Target Projection: Spatial projection that the user wants all bags to have. Bags that do not match will be assigned to this value if Assign to Target Parameters is checked.
+
 # 1\. Export Chips From Mosaic
 
 This tool provides a customizable workflow for mosaicking raster datasets in preparation for deep learning training chip extraction, with a focus on .bag raster files. It allows users to configure and process the data specifically for deep-learning applications, initially supporting shipwreck detection. The tool generates the raster training chips required to develop and train deep-learning models.
