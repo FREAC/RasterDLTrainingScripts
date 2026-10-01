@@ -2,6 +2,10 @@
 
 The Raster Deep Learning Training Scripts provide a workflow for preparing and evaluating raster data for use in deep-learning applications. The tools are designed to simplify the process of processing raster datasets, creating training chips, and checking those chips for data quality before they are used to train a model. The workflow was initially developed to support shipwreck detection using .bag raster data, but the tools can also be adapted for other raster-based deep-learning applications.
 
+# 0\. Bag Pre-Check Tool
+
+Recent addition description TBA
+
 # 1\. Export Chips From Mosaic
 
 This tool provides a customizable workflow for mosaicking raster datasets in preparation for deep learning training chip extraction, with a focus on .bag raster files. It allows users to configure and process the data specifically for deep-learning applications, initially supporting shipwreck detection. The tool generates the raster training chips required to develop and train deep-learning models.
