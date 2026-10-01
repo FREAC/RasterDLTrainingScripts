@@ -1,0 +1,192 @@
+{
+    "type": "ScriptTool",
+    "displayname": "$rc:title",
+    "app_ver": "13.7",
+    "product": "100",
+    "updated": "2026-10-01 17:24:21",
+    "params": {
+        "folder_or_bags": {
+            "displayname": "$rc:folder_or_bags.title",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "Individual Bags",
+                        "code": "$rc:folder_or_bags.domain.Individual Bags"
+                    },
+                    {
+                        "value": "Folder",
+                        "code": "$rc:folder_or_bags.domain.Folder"
+                    }
+                ]
+            },
+            "value": "Folder"
+        },
+        "folder": {
+            "type": "optional",
+            "displayname": "$rc:folder.title",
+            "datatype": {
+                "type": "DEFolder"
+            }
+        },
+        "individual_bags": {
+            "type": "optional",
+            "displayname": "$rc:individual_bags.title",
+            "datatype": {
+                "type": "GPMultiValue",
+                "datatype": {
+                    "type": "GPRasterLayer"
+                }
+            }
+        },
+        "Output_CSV": {
+            "type": "optional",
+            "direction": "out",
+            "displayname": "$rc:output_csv.title",
+            "datatype": {
+                "type": "DEFile"
+            },
+            "domain": {
+                "type": "GPFileDomain",
+                "filetypes": [
+                    "csv"
+                ]
+            }
+        },
+        "Assign_to_Target_Parameters": {
+            "displayname": "$rc:assign_to_target_parameters.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPBoolean"
+            },
+            "value": "false"
+        },
+        "Target_Cell_Y": {
+            "type": "optional",
+            "displayname": "$rc:target_cell_y.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPDouble"
+            },
+            "domain": {
+                "type": "GPRangeDomain",
+                "min": "0",
+                "max": "999999999"
+            }
+        },
+        "Target_Cell_X": {
+            "type": "optional",
+            "displayname": "$rc:target_cell_x.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPDouble"
+            },
+            "domain": {
+                "type": "GPRangeDomain",
+                "min": "0",
+                "max": "999999999"
+            }
+        },
+        "Target_Bag_Format": {
+            "type": "optional",
+            "displayname": "$rc:target_bag_format.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPString"
+            }
+        },
+        "Target_Pixel_Depth_Type": {
+            "type": "optional",
+            "displayname": "$rc:target_pixel_depth_type.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPString"
+            },
+            "domain": {
+                "type": "GPCodedValueDomain",
+                "items": [
+                    {
+                        "value": "2-bit Unsigned",
+                        "code": "$rc:target_pixel_depth_type.domain.2-bit Unsigned"
+                    },
+                    {
+                        "value": "4-bit Unsigned",
+                        "code": "$rc:target_pixel_depth_type.domain.4-bit Unsigned"
+                    },
+                    {
+                        "value": "8-bit Unsigned",
+                        "code": "$rc:target_pixel_depth_type.domain.8-bit Unsigned"
+                    },
+                    {
+                        "value": "8-bit Signed",
+                        "code": "$rc:target_pixel_depth_type.domain.8-bit Signed"
+                    },
+                    {
+                        "value": "16-bit Unsigned",
+                        "code": "$rc:target_pixel_depth_type.domain.16-bit Unsigned"
+                    },
+                    {
+                        "value": "16-bit Signed",
+                        "code": "$rc:target_pixel_depth_type.domain.16-bit Signed"
+                    },
+                    {
+                        "value": "32-bit Unsigned",
+                        "code": "$rc:target_pixel_depth_type.domain.32-bit Unsigned"
+                    },
+                    {
+                        "value": "32-bit Signed",
+                        "code": "$rc:target_pixel_depth_type.domain.32-bit Signed"
+                    },
+                    {
+                        "value": "32-bit Float",
+                        "code": "$rc:target_pixel_depth_type.domain.32-bit Float"
+                    },
+                    {
+                        "value": "64-bit Double",
+                        "code": "$rc:target_pixel_depth_type.domain.64-bit Double"
+                    },
+                    {
+                        "value": "8-bit complex",
+                        "code": "$rc:target_pixel_depth_type.domain.8-bit complex"
+                    },
+                    {
+                        "value": "16-bit complex",
+                        "code": "$rc:target_pixel_depth_type.domain.16-bit complex"
+                    },
+                    {
+                        "value": "32-bit complex",
+                        "code": "$rc:target_pixel_depth_type.domain.32-bit complex"
+                    },
+                    {
+                        "value": "64-bit complex",
+                        "code": "$rc:target_pixel_depth_type.domain.64-bit complex"
+                    }
+                ]
+            }
+        },
+        "Target_Band_Number": {
+            "type": "optional",
+            "displayname": "$rc:target_band_number.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPLong"
+            },
+            "domain": {
+                "type": "GPRangeDomain",
+                "min": "1",
+                "max": "999999999"
+            }
+        },
+        "Target_Projection": {
+            "type": "optional",
+            "displayname": "$rc:target_projection.title",
+            "category": "$rc:params.category.1",
+            "datatype": {
+                "type": "GPSpatialReference"
+            }
+        }
+    }
+}
