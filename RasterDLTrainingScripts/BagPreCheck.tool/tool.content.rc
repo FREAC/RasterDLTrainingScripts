@@ -1,0 +1,33 @@
+{
+    "map": {
+        "assign_to_target_parameters.title": "Assign to Target Parameters",
+        "folder.title": "Folder",
+        "folder_or_bags.domain.Folder": "Folder",
+        "folder_or_bags.domain.Individual Bags": "Individual Bags",
+        "folder_or_bags.title": "Folder or Individual Bags",
+        "individual_bags.title": "individual_bags",
+        "output_csv.title": "Output CSV",
+        "params.category.1": "Target Parameters",
+        "target_bag_format.title": "Target Bag Format",
+        "target_band_number.title": "Target Band Number",
+        "target_cell_x.title": "Target Cell X",
+        "target_cell_y.title": "Target Cell Y",
+        "target_pixel_depth_type.domain.16-bit Signed": "16-bit Signed",
+        "target_pixel_depth_type.domain.16-bit Unsigned": "16-bit Unsigned",
+        "target_pixel_depth_type.domain.16-bit complex": "16-bit complex",
+        "target_pixel_depth_type.domain.2-bit Unsigned": "2-bit Unsigned",
+        "target_pixel_depth_type.domain.32-bit Float": "32-bit Float",
+        "target_pixel_depth_type.domain.32-bit Signed": "32-bit Signed",
+        "target_pixel_depth_type.domain.32-bit Unsigned": "32-bit Unsigned",
+        "target_pixel_depth_type.domain.32-bit complex": "32-bit complex",
+        "target_pixel_depth_type.domain.4-bit Unsigned": "4-bit Unsigned",
+        "target_pixel_depth_type.domain.64-bit Double": "64-bit Double",
+        "target_pixel_depth_type.domain.64-bit complex": "64-bit complex",
+        "target_pixel_depth_type.domain.8-bit Signed": "8-bit Signed",
+        "target_pixel_depth_type.domain.8-bit Unsigned": "8-bit Unsigned",
+        "target_pixel_depth_type.domain.8-bit complex": "8-bit complex",
+        "target_pixel_depth_type.title": "Target Pixel Depth/Type",
+        "target_projection.title": "Target Projection",
+        "title": "0. Bag Pre-Check"
+    }
+}
