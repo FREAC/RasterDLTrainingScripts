@@ -703,27 +703,6 @@
             },
             "value": "0",
             "description": "$rc:min_polygon_overlap_ratio.descr"
-        },
-        "add_chip_name": {
-            "type": "optional",
-            "displayname": "$rc:add_chip_name.title",
-            "category": "$rc:params.category.1",
-            "datatype": {
-                "type": "GPBoolean"
-            },
-            "value": "false",
-            "description": "$rc:add_chip_name.descr"
-        },
-        "chip_names": {
-            "type": "optional",
-            "displayname": "$rc:chip_names.title",
-            "category": "$rc:params.category.1",
-            "datatype": {
-                "type": "GPString"
-            },
-            "depends": [
-                "add_chip_name"
-            ]
         }
     }
 }
