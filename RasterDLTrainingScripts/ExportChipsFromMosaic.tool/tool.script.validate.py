@@ -12,7 +12,6 @@ class ToolValidator:
         self.params[18].value = "[[-1, 0, 1],\n [-2, 0, 2],\n [-1, 0, 1]]"
         self.params[21].value = "[[-1, 0, 1],\n [-2, 0, 2],\n [-1, 0, 1]]"
         self.params[24].value = "[[-1, 0, 1],\n [-2, 0, 2],\n [-1, 0, 1]]"
-        self.params[43].enabled = False
         # Shaded Relief Settings
         for i in range(25,34):
             self.params[i].enabled = False
@@ -55,10 +54,6 @@ class ToolValidator:
         else:
             self.params[24].enabled = False
             
-        if self.params[42].value:
-            self.params[43].enabled = True
-        else:
-            self.params[43].enabled = False
         return
 
     def updateMessages(self):
