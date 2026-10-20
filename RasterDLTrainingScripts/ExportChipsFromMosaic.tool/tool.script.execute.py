@@ -147,9 +147,7 @@ def script_tool(
     in_instance_data=None, instance_class_value_field=None, min_polygon_overlap_ratio=None,
     # Shaded Relief Settings
     azimuth=None, altitude=None, z_factor=None, colormap=None, colorramp=None, slope_type=None, ps_power=None, psz_factor=None, 
-    remove_edge_effect=None,
-    # Chip Name Settings
-    add_chip_names=False, chip_names=""
+    remove_edge_effect=None
     ):
     
     band_order = [int(band1),int(band2),int(band3)]
@@ -272,18 +270,6 @@ def script_tool(
     with open(parameter_txt, "w", encoding="utf-8") as f:
         for name, value in parameters.items():
             f.write(f"{name}: {value}\n")
-    if add_chip_names:
-        arcpy.AddMessage(f"Adding Chip Names {time_format(time.time()-start_time)}")
-        out_chips = os.path.join(project_folder,r"Chips\Train\images")
-        out_labels = os.path.join(project_folder,r"Chips\Train\labels\1")
-        chip_list = [os.path.join(out_chips, file) for file in os.listdir(out_chips)]
-        #label_list = [os.path.join(out_labels, file) for file in os.listdir(out_labels)]
-        for chip in chip_list:
-            new_chip_name = os.path.join(out_chips,chip_names+os.path.basename(chip))
-            os.rename(chip,new_chip_name)
-        #for label in label_list:
-        #    new_label_name = os.path.join(out_labels,chip_names+os.path.basename(label))
-        #    os.rename(label,new_label_name)
     return
 if __name__ == "__main__":
     # Main inputs
@@ -320,8 +306,6 @@ if __name__ == "__main__":
     instance_class_value_field = arcpy.GetParameterAsText(40)
     min_polygon_overlap_ratio = arcpy.GetParameterAsText(41)
     # Chip Name Settings
-    add_chip_names = bool(arcpy.GetParameterAsText(42))
-    chip_names = arcpy.GetParameterAsText(43)
     # Band Settings
     band1 = arcpy.GetParameterAsText(16)
     band1_calc = arcpy.GetParameterAsText(17)
@@ -352,5 +336,5 @@ if __name__ == "__main__":
         image_chip_format,output_nofeature_tiles,class_value_field,buffer_radius,in_mask_polygons,rotation_angle,reference_system, 
         processing_mode,blacken_around_feature,crop_mode,in_raster2,in_instance_data,instance_class_value_field,min_polygon_overlap_ratio,
         
-        azimuth,altitude,z_factor,colormap,colorramp,slope_type,ps_power,psz_factor,remove_edge_effect, add_chip_names, chip_names
+        azimuth,altitude,z_factor,colormap,colorramp,slope_type,ps_power,psz_factor,remove_edge_effect
     )
