@@ -1,7 +1,5 @@
 {
     "map": {
-        "add_chip_name.descr": "Add text to the beginning of all chips created from this tool.",
-        "add_chip_name.title": "Add Chip Names",
         "altitude.descr": "<xdoc><p><span>Altitude is the sun's angle of elevation above the horizon and ranges from 0 to 90 degrees. A value of 0 degrees indicates that the sun is on the horizon, that is, on the same horizontal plane as the frame of reference. A value of 90 degrees indicates that the sun is directly overhead.</span></p><p><a href=\"https://doc.esri.com/en/arcgis-pro/latest/arcpy/image-analyst/shadedrelief.html\">Shaded Relief</a></p></xdoc>",
         "altitude.title": "Altitude",
         "azimuth.descr": "<xdoc><p><span>Azimuth is the sun's relative position along the horizon (in degrees). This position is indicated by the angle of the sun measured clockwise from due north. An azimuth of 0 degrees indicates north, east is 90 degrees, south is 180 degrees, and west is 270 degrees.</span></p><p><a href=\"https://doc.esri.com/en/arcgis-pro/latest/arcpy/image-analyst/shadedrelief.html\">Shaded Relief</a></p></xdoc>",
@@ -42,7 +40,6 @@
         "blacken_around_feature.title": "Blacken Around Feature",
         "buffer_radius.descr": "<xdoc><p><span>The radius of a buffer around each training sample that will be used to delineate a training sample area. This allows you to create circular polygon training samples from points.</span></p><p><span>The linear unit of the in_class_data parameter value's spatial reference is used</span></p><p><a href=\"https://doc.esri.com/en/arcgis-pro/latest/tool-reference/image-analyst/export-training-data-for-deep-learning.html?tabs=dialog\">Export Training Data for Deep Learning</a></p></xdoc>",
         "buffer_radius.title": "Buffer Radius",
-        "chip_names.title": "Chip Names",
         "class_value_field.descr": "<xdoc><p><span>The field that contains the class values. If no field is specified, the system searches for a value or classvalue field. The field should be numeric, usually an integer. If the feature does not contain a class field, the system determines that all records belong to one class.</span></p><p><a href=\"https://doc.esri.com/en/arcgis-pro/latest/tool-reference/image-analyst/export-training-data-for-deep-learning.html?tabs=dialog\">Export Training Data for Deep Learning</a></p></xdoc>",
         "class_value_field.title": "Class Value Field",
         "colormap.descr": "<xdoc><p><span>The color map used to render the raster. This can be provided as a list or dictionary.</span></p><p><a href=\"https://doc.esri.com/en/arcgis-pro/latest/arcpy/image-analyst/shadedrelief.html\">Shaded Relief</a></p></xdoc>",
