@@ -258,7 +258,7 @@ def script_tool(folder_or_bags, in_rasters, assign_to_target, target_cell_y, tar
 if __name__ == "__main__":
     folder_or_bags = arcpy.GetParameterAsText(0)
     folder = arcpy.GetParameterAsText(1)
-    bags = arcpy.GetParameterAsText(2)
+    bags = arcpy.GetParameter(2)
     
     if folder_or_bags == "Folder":
         in_rasters = folder
