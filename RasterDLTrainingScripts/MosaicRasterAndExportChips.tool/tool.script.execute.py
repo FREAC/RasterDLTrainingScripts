@@ -251,7 +251,7 @@ def script_tool(
         "band2": band_order[1], "band2_calc": band_calc[1], "band2_conv": band_conv[1],
         "band3": band_order[2], "band3_calc": band_calc[2], "band3_conv": band_conv[2],
     }
-    if extract_chips:
+    if export_chips:
         parameters.update({
             # Tile settings
             "metadata_form": metadata_form,"tile_size_x": tile_size_x,"tile_size_y": tile_size_y,
