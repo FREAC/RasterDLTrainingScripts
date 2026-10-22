@@ -29,6 +29,7 @@ class ToolValidator:
         # export chips
         export_chips = self.params[42].value
         if not export_chips:
+            self.params[4].enabled = False
             self.params[5].enabled = False
             self.params[6].enabled = False
             self.params[7].enabled = False
@@ -49,6 +50,7 @@ class ToolValidator:
             self.params[40].enabled = False
             self.params[41].enabled = False
         else:
+            self.params[4].enabled = True
             self.params[5].enabled = True
             self.params[6].enabled = True
             self.params[7].enabled = True
