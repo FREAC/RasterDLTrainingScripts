@@ -3,7 +3,7 @@
     "displayname": "$rc:title",
     "app_ver": "13.7",
     "product": "100",
-    "updated": "2026-10-21 18:17:36",
+    "updated": "2026-10-22 16:09:55",
     "description": "$rc:description",
     "params": {
         "project_folder": {
@@ -53,7 +53,9 @@
             }
         },
         "shipwrecks_shp": {
+            "type": "optional",
             "displayname": "$rc:shipwrecks_shp.title",
+            "category": "$rc:params.category.1",
             "datatype": {
                 "type": "GPFeatureRecordSetLayer"
             },
