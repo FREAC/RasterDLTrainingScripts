@@ -86,7 +86,6 @@ def check_bags(bag_list):
         arcpy.AddError(f"Bags do not all have same projections: {projections}")
         raise arcpy.ExecuteError
     arcpy.AddMessage(f"Bags compatibility passed")
-
 def basic_band_mosaic(staged_mosaic: str, mosaic_band_out: str,band_num: int):
     band = arcpy.ia.ExtractBand(staged_mosaic, [band_num])
     #band_num = 1: elevation, band_num = 1: uncertainty
@@ -155,6 +154,46 @@ def script_tool(
     band_conv = [ast.literal_eval(band1_conv),ast.literal_eval(band2_conv),ast.literal_eval(band3_conv)]
     os.makedirs(project_folder, exist_ok=True)
     
+    #create parameter_txt
+    parameter_txt = os.path.join(project_folder, "parameters.txt")
+    arcpy.AddMessage(f"Saving Parameter log to: {parameter_txt}")
+    try:
+        parameters = {
+            # Main inputs
+            "time_start": datetime.datetime.now(), "project_folder": project_folder, "bag_folder": bag_folder, "shipwrecks_shp": shipwrecks_shp,
+            # Band settings
+            "band1": band_order[0], "band1_calc": band_calc[0], "band1_conv": band_conv[0],
+            "band2": band_order[1], "band2_calc": band_calc[1], "band2_conv": band_conv[1],
+            "band3": band_order[2], "band3_calc": band_calc[2], "band3_conv": band_conv[2],
+        }
+        if export_chips:
+            parameters.update({
+                # Tile settings
+                "metadata_form": metadata_form,"tile_size_x": tile_size_x,"tile_size_y": tile_size_y,
+                "stride_x": stride_x,"stride_y": stride_y,
+                # Export settings
+                "image_chip_format": image_chip_format, "output_nofeature_tiles": output_nofeature_tiles,
+                "class_value_field": class_value_field, "buffer_radius": buffer_radius, "in_mask_polygons": in_mask_polygons,
+                "rotation_angle": rotation_angle, "reference_system": reference_system, "processing_mode": processing_mode,
+                "blacken_around_feature": blacken_around_feature, "crop_mode": crop_mode, "in_raster2": in_raster2,
+                "in_instance_data": in_instance_data, "instance_class_value_field": instance_class_value_field,
+                "min_polygon_overlap_ratio": min_polygon_overlap_ratio
+            })
+        if band_calc[0] == "Shaded Relief":
+            parameters.update({
+                # Shaded relief settings
+                "azimuth": azimuth, "altitude": altitude, "z_factor": z_factor, "colormap": colormap, "colorramp": colorramp, 
+                "slope_type": slope_type, "ps_power": ps_power, "psz_factor": psz_factor, "remove_edge_effect": remove_edge_effect,
+            })
+        # Write parameters to text file for reference
+        with open(parameter_txt, "w", encoding="utf-8") as f:
+            for name, value in parameters.items():
+                f.write(f"{name}: {value}\n")
+    except Exception as e:
+        arcpy.AddMessage(f"Error saving parameters: {e}")
+    
+    
+    arcpy.AddMessage(f"Begin: {datetime.datetime.now()}")
     start_time = time.time()
     mosaic_gdb = os.path.join(project_folder,"MosaicRasters.gdb")
     if not arcpy.Exists(mosaic_gdb):
@@ -164,7 +203,6 @@ def script_tool(
         arcpy.CreateFileGDB_management(project_folder, "StagingRasters")
     chip_folder = os.path.join(project_folder,"Chips")
     os.makedirs(chip_folder, exist_ok=True)
-    arcpy.AddMessage(f"Begin: {datetime.datetime.now()}")
     
     if folderOrIndiv == "Folder":
         folder_names = [name for name in os.listdir(bag_folder) if os.path.isdir(os.path.join(bag_folder, name))]
@@ -222,7 +260,7 @@ def script_tool(
     arcpy.AddMessage(f"Finished Mosaic {time_format(time.time()-start_time)}")
     
     # final chip extraction
-    if extract_chips:
+    if export_chips:
         chips = os.path.join(project_folder,r"Chips\Train")
         export_kwargs = {
             "in_raster": final_mosaic,"out_folder": chips,"in_class_data": shipwrecks_shp,
@@ -242,38 +280,6 @@ def script_tool(
                 export_kwargs[name] = value
         arcpy.ia.ExportTrainingDataForDeepLearning(**export_kwargs)
         arcpy.AddMessage(f"Extracted Chips {time_format(time.time()-start_time)}")
-    parameter_txt = os.path.join(project_folder, "parameters.txt")
-    parameters = {
-        # Main inputs
-        "project_folder": project_folder, "bag_folder": bag_folder, "shipwrecks_shp": shipwrecks_shp,
-        # Band settings
-        "band1": band_order[0], "band1_calc": band_calc[0], "band1_conv": band_conv[0],
-        "band2": band_order[1], "band2_calc": band_calc[1], "band2_conv": band_conv[1],
-        "band3": band_order[2], "band3_calc": band_calc[2], "band3_conv": band_conv[2],
-    }
-    if export_chips:
-        parameters.update({
-            # Tile settings
-            "metadata_form": metadata_form,"tile_size_x": tile_size_x,"tile_size_y": tile_size_y,
-            "stride_x": stride_x,"stride_y": stride_y,
-            # Export settings
-            "image_chip_format": image_chip_format, "output_nofeature_tiles": output_nofeature_tiles,
-            "class_value_field": class_value_field, "buffer_radius": buffer_radius, "in_mask_polygons": in_mask_polygons,
-            "rotation_angle": rotation_angle, "reference_system": reference_system, "processing_mode": processing_mode,
-            "blacken_around_feature": blacken_around_feature, "crop_mode": crop_mode, "in_raster2": in_raster2,
-            "in_instance_data": in_instance_data, "instance_class_value_field": instance_class_value_field,
-            "min_polygon_overlap_ratio": min_polygon_overlap_ratio, "add_chip_names": add_chip_names, "chip_names": chip_names
-        })
-    if band_calc[0] == "Shaded Relief":
-        parameters.update({
-            # Shaded relief settings
-            "azimuth": azimuth, "altitude": altitude, "z_factor": z_factor, "colormap": colormap, "colorramp": colorramp, 
-            "slope_type": slope_type, "ps_power": ps_power, "psz_factor": psz_factor, "remove_edge_effect": remove_edge_effect,
-        })
-    # Write parameters to text file for reference
-    with open(parameter_txt, "w", encoding="utf-8") as f:
-        for name, value in parameters.items():
-            f.write(f"{name}: {value}\n")
     return
 if __name__ == "__main__":
     # Main inputs
