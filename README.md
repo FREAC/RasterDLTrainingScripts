@@ -4,7 +4,7 @@ The Raster Deep Learning Training Scripts provide a workflow for preparing and e
 
 # 0\. Bag Pre-Check Tool
 
-Recent addition description TBA
+This tool takes in a grouping of .bag files and makes various checks for compatibility between each other in preparation for mosaicking, chip extraction, and deep learning model training. It allows for checking against pre-defined properties or .bags that do not fit the most common values for those properties in the group, as well as optional auto-reprojection for .bags not at those values.
 
 ## Default Settings
 
@@ -28,7 +28,7 @@ Parameters:
 - Target Band Number: Band count that the user wants all bags to have. Assign Target Parameters will not change this value for now as to not lose data/allow user specificity/
 - Target Projection: Spatial projection that the user wants all bags to have. Bags that do not match will be assigned to this value if Assign to Target Parameters is checked.
 
-# 1\. Export Chips From Mosaic
+# 1\. Mosaic Rasters and Export Chips
 
 This tool provides a customizable workflow for mosaicking raster datasets in preparation for deep learning training chip extraction, with a focus on .bag raster files. It allows users to configure and process the data specifically for deep-learning applications, initially supporting shipwreck detection. The tool generates the raster training chips required to develop and train deep-learning models.
 
@@ -63,7 +63,6 @@ Parameters:
 - Metadata Format: Specifies the format that will be used for the output metadata labels. Default is RCNN_Masks for this tool, but more information on the different kinds of metadata format options can be found in the documentation for [Export Training Data for Deep Learning](https://doc.esri.com/en/arcgis-pro/latest/tool-reference/spatial-analyst/export-training-data-for-deep-learning.html?tabs=dialog).
 - Tile Size X and Y: The size of the image chips for the x- and y-dimensions.
 - Stride X and Y: The distance to move in the x- and y-direction when creating the next image chips. When stride is equal to tile size, there will be no overlap. When stride is equal to half the tile size, there will be 50 percent overlap.
-- Add Chip Names: (Optional) Adds a string to the beginning of all chips exported by this tool after completion.
 
 ## Optional Export Settings
 
@@ -85,6 +84,7 @@ Parameters:
   - Sobel Convolution—Detects vertical edges, frequently used in shipwreck
   - Shaded Relief—All three bands become shaded relief (only available for first Elevation band)
   - Custom Convolution—write or insert a user-defined convolution
+    (TO BE ADDED: Slope, Aspect. Not functional at the moment)
 
 <img width="581" height="202" alt="image" src="https://github.com/user-attachments/assets/1b250067-bba3-4f74-be86-f9806dd7bd87" />
 
