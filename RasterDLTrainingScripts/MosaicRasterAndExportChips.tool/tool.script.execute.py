@@ -243,9 +243,9 @@ def script_tool(
         elif band_calc[i] != None:
             which_band_mosaic(staged_mosaic, bands[i], band_order[i], conv_type=band_calc[i])
         if band_calc[i] == "Shaded Relief":
-            band_order[1:] = ["NA"] * (len(arr)-1)
-            band_calc[1:] = ["NA"] * (len(arr)-1)
-            band_conv = ["NA"] * (len(arr))
+            band_order[1:] = ["NA"] * (len(band_order)-1)
+            band_calc[1:] = ["NA"] * (len(band_calc)-1)
+            band_conv = ["NA"] * (len(band_conv))
             break
         if band_calc[i] != "Custom Convolution":
             band_conv[i] = "NA"
