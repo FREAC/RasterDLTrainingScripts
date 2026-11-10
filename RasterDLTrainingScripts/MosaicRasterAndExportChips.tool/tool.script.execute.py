@@ -119,6 +119,37 @@ def shadrel_band_mosaic(in_mosaic: str, mosaic_band_out: str, band_num: int,
     shaded_relief = arcpy.sa.ShadedRelief(**shaded_relief_kwargs)
     shaded_relief.save(mosaic_band_out)
     #no need to return, just refer with mosaic_band_out
+'''Aspect(in_raster, {method}, {z_unit}, {project_geodesic_azimuths}, {analysis_target_device})'''
+'''https://doc.esri.com/en/arcgis-pro/latest/tool-reference/spatial-analyst/aspect.html?tabs=python'''
+#in_mosaic needs to only have 1 band (e.g. an extracted mosaic)
+def aspect_band_mosaic(in_mosaic: str, mosaic_band_out: str, band_num: int):#method: str, z_unit: str, project_geodesic_azimuths: boolean, analysis_target_device: str
+    band = arcpy.ia.ExtractBand(in_mosaic, [band_num])
+    aspect_kwargs = {
+        "raster": band
+    }
+    #optional_args = {"azimuth": azimuth,"altitude": altitude,"z_factor": z_factor,"colormap": colormap,"colorramp": colorramp,"slope_type": slope_type,
+    #    "ps_power": ps_power,"psz_factor": psz_factor,"remove_edge_effect": remove_edge_effect}
+    #for name, value in optional_args.items():
+    #    if value not in (None, ""):
+    #        shaded_relief_kwargs[name] = value
+    aspect = arcpy.sa.Aspect(**aspect_kwargs)
+    aspect.save(mosaic_band_out)
+    #no need to return, just refer with mosaic_band_out
+'''Slope(in_raster, {output_measurement}, {z_factor}, {method}, {z_unit}, {analysis_target_device})'''
+'''https://doc.esri.com/en/arcgis-pro/latest/tool-reference/spatial-analyst/slope.html?tabs=python'''
+def slope_band_mosaic(in_mosaic: str, mosaic_band_out: str, band_num: int):#output_measurement, z_factor, method, z_unit, analysis_target_device
+    band = arcpy.ia.ExtractBand(in_mosaic, [band_num])
+    slope_kwargs = {
+        "raster": band
+    }
+    #optional_args = {"azimuth": azimuth,"altitude": altitude,"z_factor": z_factor,"colormap": colormap,"colorramp": colorramp,"slope_type": slope_type,
+    #    "ps_power": ps_power,"psz_factor": psz_factor,"remove_edge_effect": remove_edge_effect}
+    #for name, value in optional_args.items():
+    #    if value not in (None, ""):
+    #        shaded_relief_kwargs[name] = value
+    slope = arcpy.sa.Slope(**slope_kwargs)
+    slope.save(mosaic_band_out)
+    #no need to return, just refer with mosaic_band_out
 def which_band_mosaic(in_mosaic, out_mosaic, band_num, conv_type="No Calculation", conv=[], 
     azimuth=None, altitude=None, z_factor=None, colormap=None, colorramp=None, slope_type=None, ps_power=None, psz_factor=None, remove_edge_effect=None
     ):
@@ -195,12 +226,12 @@ def script_tool(
     
     arcpy.AddMessage(f"Begin: {datetime.datetime.now()}")
     start_time = time.time()
-    mosaic_gdb = os.path.join(project_folder,"MosaicRasters.gdb")
+    mosaic_gdb = os.path.join(project_folder,os.path.basename(project_folder)+"_Mosaics.gdb")
     if not arcpy.Exists(mosaic_gdb):
-        arcpy.CreateFileGDB_management(project_folder, "MosaicRasters")
-    staging_gdb = os.path.join(project_folder,"StagingRasters.gdb")
-    if not arcpy.Exists(staging_gdb):
-        arcpy.CreateFileGDB_management(project_folder, "StagingRasters")
+        arcpy.CreateFileGDB_management(project_folder, os.path.basename(project_folder)+"_Mosaics")
+    #staging_gdb = os.path.join(project_folder,"StagingRasters.gdb")
+    #if not arcpy.Exists(staging_gdb):
+    #    arcpy.CreateFileGDB_management(project_folder, "StagingRasters")
     chip_folder = os.path.join(project_folder,"Chips")
     os.makedirs(chip_folder, exist_ok=True)
     
@@ -224,10 +255,10 @@ def script_tool(
         for bag in bag_folder:
             bag_list.append(bag.dataSource)
     # create staged mosaic from input mosaics
-    staged_mosaic = os.path.join(staging_gdb,"init_mosaic_2b")
+    staged_mosaic = os.path.join(mosaic_gdb,"init_mosaic_2b")
     if not arcpy.Exists(staged_mosaic):
         arcpy.management.CreateMosaicDataset(
-            staging_gdb,"init_mosaic_2b",arcpy.Describe(bag_list[0]).spatialReference,
+            mosaic_gdb,"init_mosaic_2b",arcpy.Describe(bag_list[0]).spatialReference,
             num_bands=2,pixel_type="32_BIT_FLOAT")
     arcpy.management.AddRastersToMosaicDataset(staged_mosaic,"Raster Dataset",bag_list,update_boundary="NO_BOUNDARY")
     
@@ -235,7 +266,7 @@ def script_tool(
     bands = []
     for i in range(3):
         arcpy.AddMessage(f"Computing band {i+1} {band_calc[i]} after {time_format(time.time()-start_time)}")
-        bands.append(os.path.join(staging_gdb, f"band{i+1}_{band_order[i]}{band_calc[i].replace(" ", "_")}"))
+        bands.append(os.path.join(mosaic_gdb, f"band{i+1}_{band_order[i]}{band_calc[i].replace(" ", "_")}"))
         if band_conv[i] != []:
             which_band_mosaic(staged_mosaic, bands[i], band_order[i], conv_type=band_calc[i], conv=band_conv[i], 
                 azimuth=azimuth,altitude=altitude,z_factor=z_factor,colormap=colormap,colorramp=colorramp,slope_type=slope_type,
@@ -243,15 +274,15 @@ def script_tool(
         elif band_calc[i] != None:
             which_band_mosaic(staged_mosaic, bands[i], band_order[i], conv_type=band_calc[i])
         if band_calc[i] == "Shaded Relief":
-            band_order[1:] = ["NA"] * (len(band_order)-1)
-            band_calc[1:] = ["NA"] * (len(band_calc)-1)
-            band_conv = ["NA"] * (len(band_conv))
+            band_order[1:] = ["NA"] * (len(arr)-1)
+            band_calc[1:] = ["NA"] * (len(arr)-1)
+            band_conv = ["NA"] * (len(arr))
             break
         if band_calc[i] != "Custom Convolution":
             band_conv[i] = "NA"
             
     # final mosaic
-    final_mosaic = os.path.join(mosaic_gdb,"mosaic_3b")
+    final_mosaic = os.path.join(mosaic_gdb,os.path.basename(project_folder)+"_3b_mosaic")
     if not arcpy.Exists(final_mosaic):
         if band_calc[i] == "Shaded Relief":
             arcpy.management.CopyRaster(bands[0],final_mosaic)
